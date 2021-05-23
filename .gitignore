@@ -325,3 +325,5 @@ ASALocalRun/
 
 # NVidia Nsight GPU debugger configuration file
 *.nvuser
+/LogisticCompany/LogisticCompany/wwwroot/lib/bootstrap
+/LogisticCompany/LogisticCompany/Migrations

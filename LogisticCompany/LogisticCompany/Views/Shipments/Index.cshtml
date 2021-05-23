@@ -1,0 +1,93 @@
+﻿@model IEnumerable<LogisticCompany.Models.Shipment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+@if (User.IsInRole("Employee"))
+{
+    <h2 class="text-center">Shipments:</h2>
+
+    <div class="text-center col-md-12" style="padding: 20px">
+        <a asp-controller="Shipments" asp-action="Create">
+            <button class="text-center btn btn-primary">Create shipment</button>
+        </a>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table col-md-12" style="">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BillOfLanding)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Origin)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Destination)
+                    </th>
+                    <th>
+                        Sender
+                    </th>
+                    <th>
+                        Recipient
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BillOfLanding)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Origin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Destination)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sender.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Recipient.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            <a asp-controller="Shipments" asp-action="Edit" asp-route-id="@item.Id">
+                                <button class="text-center btn btn-sm btn-warning">Edit</button>
+                            </a>
+                            <a asp-controller="Shipments" asp-action="Details" asp-route-id="@item.Id">
+                                <button class="text-center btn btn-sm btn-light">Details</button>
+                            </a>
+                            <a asp-controller="Shipments" asp-action="Delete" asp-route-id="@item.Id">
+                                <button class="text-center btn btn-sm btn-danger">Delete</button>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else if (User.IsInRole("Client"))
+{
+    <h2 class="text-center">My Shipments:</h2>
+
+}
