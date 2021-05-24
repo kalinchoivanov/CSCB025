@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace LogisticCompany.Data.Configurations
 {
-    public class ClientConfiguration : IEntityTypeConfiguration<Client>
+    public class ClientConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
-        public void Configure(EntityTypeBuilder<Client> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
             builder.HasMany(s => s.Shipments)
                 .WithOne(c => c.Recipient)
-                .HasForeignKey(c => c.Id);
+                .HasForeignKey(c => c.RecipientId);
         }
     }
 }

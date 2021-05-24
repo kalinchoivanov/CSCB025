@@ -36,6 +36,12 @@
                         Recipient
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.Weight)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.Status)
                     </th>
                     <th>
@@ -64,21 +70,33 @@
                             @Html.DisplayFor(modelItem => item.Recipient.UserName)
                         </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.Weight)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Status)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Type)
                         </td>
                         <td>
-                            <a asp-controller="Shipments" asp-action="Edit" asp-route-id="@item.Id">
-                                <button class="text-center btn btn-sm btn-warning">Edit</button>
-                            </a>
                             <a asp-controller="Shipments" asp-action="Details" asp-route-id="@item.Id">
                                 <button class="text-center btn btn-sm btn-light">Details</button>
                             </a>
                             <a asp-controller="Shipments" asp-action="Delete" asp-route-id="@item.Id">
                                 <button class="text-center btn btn-sm btn-danger">Delete</button>
                             </a>
+                            @if (item.Status != Status.Delivered)
+                            {
+                                <a asp-controller="Shipments" asp-action="Edit" asp-route-id="@item.Id">
+                                    <button class="text-center btn btn-sm btn-warning">Edit</button>
+                                </a>
+                                <a asp-controller="Shipments" asp-action="Deliver" asp-route-id="@item.Id">
+                                    <button class="text-center btn btn-sm btn-success">Deliver</button>
+                                </a>
+                            }
                         </td>
                     </tr>
                 }
@@ -89,5 +107,85 @@
 else if (User.IsInRole("Client"))
 {
     <h2 class="text-center">My Shipments:</h2>
-
+    <div class="col-md-12">
+        <table class="table col-md-12" style="">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BillOfLanding)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Origin)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Destination)
+                    </th>
+                    <th>
+                        Sender
+                    </th>
+                    <th>
+                        Recipient
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Weight)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BillOfLanding)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Origin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Destination)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sender.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Recipient.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Weight)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            <a asp-controller="Shipments" asp-action="Details" asp-route-id="@item.Id">
+                                <button class="text-center btn btn-sm btn-light">Details</button>
+                            </a>
+                            @if (item.Status != Status.Delivered)
+                            {
+                                <a asp-controller="Shipments" asp-action="Deliver" asp-route-id="@item.Id">
+                                    <button class="text-center btn btn-sm btn-success">Confirm Deliver</button>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }

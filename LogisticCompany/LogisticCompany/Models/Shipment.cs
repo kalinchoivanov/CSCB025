@@ -8,6 +8,7 @@ namespace LogisticCompany.Models
 {
     public class Shipment
     {
+        [Key]
         public string Id { get; set; }
 
         public Guid BillOfLanding { get; set; }
@@ -18,17 +19,21 @@ namespace LogisticCompany.Models
 
         public string Description { get; set; }
 
-        public virtual Client Sender { get; set; }
+        public virtual ApplicationUser Sender { get; set; }
 
         public string SenderId { get; set; }
 
-        public virtual Client Recipient { get; set; }
+        public virtual ApplicationUser Recipient { get; set; }
 
         public string RecipientId { get; set; }
 
         public Status Status { get; set; }
 
         public ShipmentType Type { get; set; }
+
+        public decimal Weight { get; set; }
+
+        public decimal Price { get; set; }
     }
 
     public enum Status
