@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LogisticCompany.Data;
 using LogisticCompany.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace LogisticCompany.Controllers
 {
     public class OfficesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly INotyfService _notyf;
 
-        public OfficesController(ApplicationDbContext context)
+        public OfficesController(ApplicationDbContext context, INotyfService notyf)
         {
             _context = context;
+            _notyf = notyf;
         }
 
         // GET: Offices
@@ -64,6 +67,8 @@ namespace LogisticCompany.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            _notyf.Success("Office created!");
             return View(office);
         }
 

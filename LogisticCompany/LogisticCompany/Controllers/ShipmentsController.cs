@@ -9,16 +9,20 @@ using LogisticCompany.Data;
 using LogisticCompany.Models;
 using LogisticCompany.Models.ViewModels;
 using System.Security.Claims;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using Newtonsoft.Json;
 
 namespace LogisticCompany.Controllers
 {
     public class ShipmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly INotyfService _notyf;
 
-        public ShipmentsController(ApplicationDbContext context)
+        public ShipmentsController(ApplicationDbContext context, INotyfService notyf)
         {
             _context = context;
+            _notyf = notyf;
         }
 
         // GET: Shipments
@@ -63,7 +67,8 @@ namespace LogisticCompany.Controllers
         {
             ViewData["Id"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
             ViewData["SenderId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
-            return View();
+            
+            return View();    
         }
 
         [HttpPost]
@@ -78,8 +83,20 @@ namespace LogisticCompany.Controllers
                 shipment.BillOfLanding = Guid.NewGuid();
                 shipment.Status = Status.Sent;
                 
-                var recipient = _context.ApplicationUsers.First(c => c.UserName == shipmentCreateModel.RecipientUserName);
-                var sender = _context.ApplicationUsers.First(c => c.UserName == shipmentCreateModel.SenderUserName);
+                var recipient = _context.ApplicationUsers.FirstOrDefault(c => c.UserName == shipmentCreateModel.RecipientUserName);
+                var sender = _context.ApplicationUsers.FirstOrDefault(c => c.UserName == shipmentCreateModel.SenderUserName);
+
+                if (recipient == null)
+                {
+                    _notyf.Error("Recipient with this user name was not found!");
+                    return View(shipmentCreateModel);
+                }
+                else if (sender == null)
+                {
+                    _notyf.Error("Sender with this user name was not found!");
+                    return View(shipmentCreateModel);
+                }
+
 
                 shipment.Sender = sender;
                 shipment.Recipient = recipient;
@@ -93,6 +110,8 @@ namespace LogisticCompany.Controllers
 
                 _context.Add(shipment);
                 await _context.SaveChangesAsync();
+
+                _notyf.Success("Shipment created");
                 return RedirectToAction(nameof(Index));
             }
 

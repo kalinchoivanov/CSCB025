@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LogisticCompany.Models;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 namespace LogisticCompany
 {
@@ -36,6 +38,7 @@ namespace LogisticCompany
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
 
         }
 
@@ -69,6 +72,8 @@ namespace LogisticCompany
                     defaults: new { controller = "Shipments", action = "Index"});
                 endpoints.MapRazorPages();
             });
+
+            app.UseNotyf();
         }
     }
 }
