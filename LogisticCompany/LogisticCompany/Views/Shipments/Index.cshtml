@@ -6,7 +6,7 @@
 
 
 
-@if (User.IsInRole("Employee"))
+@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
 {
     <h2 class="text-center">Shipments:</h2>
 

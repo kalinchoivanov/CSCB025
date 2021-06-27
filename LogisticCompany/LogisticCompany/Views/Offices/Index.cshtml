@@ -1,0 +1,64 @@
+﻿@model IEnumerable<LogisticCompany.Models.Office>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <div class="text-center col-md-12" style="padding: 20px">
+        <a asp-controller="Offices" asp-action="Create">
+            <button class="text-center btn btn-primary">Create office</button>
+        </a>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Phone number
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">
+                        <button class="text-center btn btn-sm btn-warning">Edit</button>
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        <button class="text-center btn btn-sm btn-light">Details</button>
+                    </a> 
+                    <a asp-action="Delete" asp-route-id="@item.Id">
+                        <button class="text-center btn btn-sm btn-danger">Delete</button>
+                    </a>
+                </td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+

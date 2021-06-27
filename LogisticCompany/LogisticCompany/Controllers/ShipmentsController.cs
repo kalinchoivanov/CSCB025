@@ -89,6 +89,7 @@ namespace LogisticCompany.Controllers
                 shipment.Destination = shipmentCreateModel.Destination;
                 shipment.Description = shipmentCreateModel.Description;
                 shipment.Weight = shipmentCreateModel.Weight;
+                shipment.Price = shipmentCreateModel.Price;
 
                 _context.Add(shipment);
                 await _context.SaveChangesAsync();

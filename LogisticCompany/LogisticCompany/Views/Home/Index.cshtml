@@ -8,10 +8,13 @@
     ViewData["Title"] = "Home Page";
 }
 
+<div class="text-center col-md-12">
+    <h6 style="padding-bottom: 30px">Welcome @Model.UserName</h6>
+</div>
+
 @if (Model.Role == "Employee")
 {
     <div class="text-center col-md-12">
-        <h6 style="padding-bottom: 30px">Welcome @Model.UserName</h6>
         <a asp-controller="Shipments" asp-action="Create">
             <button class="text-center btn btn-primary">Create shipment</button>
         </a>
@@ -20,8 +23,12 @@
 else if (Model.Role == "Client")
 {
     <div class="text-center col-md-12">
-        <h6 style="padding-bottom: 30px">Welcome @Model.UserName</h6>
         <h7 style="">Your Shipments:</h7>
     </div>
+}
+
+@if (Model.Role == "Admin")
+{
+
 }
 

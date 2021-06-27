@@ -22,6 +22,8 @@ namespace LogisticCompany.Data
 
         public DbSet<Shipment> Shipments { get; set; }
 
+        public DbSet<Office> Office { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -29,5 +31,6 @@ namespace LogisticCompany.Data
             modelBuilder.ApplyConfiguration(new ClientConfiguration());
 
         }
+
     }   
 }
