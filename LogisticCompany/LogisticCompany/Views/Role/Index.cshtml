@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LogisticCompany.Models.ViewModels.UserRoleViewModel>
+
+
+<div style="text-align:center">
+    <h3>Users with roles:</h3>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
+                </td>
+                <td>
+                    @if (item.Role != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.Role)
+                    }
+                    else
+                    {
+                        <p style="color:red">No role assigned</p>
+                    }
+                </td>
+                <td>
+                    @if (item.Role == "Client")
+                    {
+                        <a asp-action="ChangeRoleToEmployee" asp-route-id="@item.ApplicationUser.Id">
+                            <button class="text-center btn btn-sm btn-danger">Change to Employee</button>
+                        </a>
+                    }
+                    else if (item.Role == "Employee")
+                    {
+                        <a asp-action="ChangeRoleToClient" asp-route-id="@item.ApplicationUser.Id">
+                            <button class="text-center btn btn-sm btn-success">Change to Client</button>
+                        </a>
+                    }
+                    else if (item.Role == null)
+                    {
+                        <a asp-action="ChangeRoleToEmployee" asp-route-id="@item.ApplicationUser.Id">
+                            <button class="text-center btn btn-sm btn-danger">Change to Employee</button>
+                        </a>
+                        <a asp-action="ChangeRoleToClient" asp-route-id="@item.ApplicationUser.Id">
+                            <button class="text-center btn btn-sm btn-success">Change to Client</button>
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
