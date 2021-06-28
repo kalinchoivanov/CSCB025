@@ -20,7 +20,7 @@ namespace LogisticCompany.Controllers
         {
             _logger = logger;
             _userManager = userManager;
-        }
+        } 
 
         public async Task<IActionResult> Index()
         {
