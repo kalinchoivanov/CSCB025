@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<body>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Reports</h1><br>
+
+
+            <select id="dropdownid" name="eventId" class="form-control">
+                <option value="1">Select Report</option>
+                <option value="AllClients">Show all clients</option>
+                <option value="AllEmployees">Show all employees</option>
+                <option value="AllShipments">Show all shipments</option>
+                <option value="AllUndeliveredShipments">Show all undelivered shipments</option>
+                <option value="OpenShipmentsSentBy">Show shipments sent by specific client</option>
+                <option value="OpenShipmentsRecievedBy">Show shipments recieved by specific client</option>
+                <option value="IncomeForPeriod">Show income for specific period</option>
+            </select>
+
+            <div style="margin-top:50px"> <div id="partialPlaceHolder"></div></div>
+        </div>
+
+        <!-- JS includes -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>
+        <script>
+			// jquery
+            $("#dropdownid").on("change", function(){
+
+                var url = '@Url.Action("GetReport", "Reports")' + "?reportName="  + $(this).val();
+
+                $("#partialPlaceHolder").load(url, function () {
+                    $("#dropdownid").val("1");
+			    })
+			})
+
+
+        </script>
+</body>
