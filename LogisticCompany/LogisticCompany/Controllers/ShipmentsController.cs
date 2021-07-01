@@ -165,7 +165,7 @@ namespace LogisticCompany.Controllers
                     }
                     else
                     {
-                        throw;
+                        _notyf.Error("");
                     }
                 }
                 return RedirectToAction(nameof(Index));
@@ -212,22 +212,21 @@ namespace LogisticCompany.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //public task<iactionresult> calculateprice(double weight, shipmenttype type)
-        //{
-        //    double price = type == shipmenttype.normal ? 4.8 : 8;
+        public IActionResult CalculatePrice(ShipmentCreateModel shipmentCreateModel)
+        {
+            double price = shipmentCreateModel.Type == ShipmentType.Normal ? 4.8 : 8;
 
-        //    if (weight > 5 && weight < 20)
-        //    {
-        //        price += 10;
-        //    }
-        //    else if (weight > 20)
-        //    {
-        //        price += 25;
-        //    }
+            if (shipmentCreateModel.Weight > 5 && shipmentCreateModel.Weight < 20)
+            {
+                shipmentCreateModel.Price += 10;
+            }
+            else if (shipmentCreateModel.Weight > 20)
+            {
+                shipmentCreateModel.Price += 25;
+            }
 
-
-        //    return view();
-        //}
+            return View("Create", shipmentCreateModel);
+        }
 
         private bool ShipmentExists(string id)
         {
@@ -254,6 +253,7 @@ namespace LogisticCompany.Controllers
             shipment.Description = shipmentCreateModel.Description;
             shipment.Weight = shipmentCreateModel.Weight;
             shipment.Price = shipmentCreateModel.Price;
+            shipment.Date = shipmentCreateModel.Date;
 
             return shipment;
         }
@@ -275,7 +275,8 @@ namespace LogisticCompany.Controllers
             shipmentCreateModel.RecipientUserName = recipient.UserName;
             shipmentCreateModel.Status = shipment.Status;
             shipmentCreateModel.Type = shipment.Type;
-            shipment.Price = shipmentCreateModel.Price;
+            shipmentCreateModel.Price = shipment.Price;
+            shipmentCreateModel.Weight = shipment.Weight;
 
             return shipmentCreateModel;
         }

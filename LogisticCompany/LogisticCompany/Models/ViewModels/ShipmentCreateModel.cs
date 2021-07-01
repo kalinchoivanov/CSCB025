@@ -35,6 +35,9 @@ namespace LogisticCompany.Models.ViewModels
 
         [Required]
         public decimal Price { get; set; }
+
+        [Required]
+        public DateTime Date { get; set; }
     }
 }
 

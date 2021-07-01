@@ -1,15 +1,36 @@
-﻿<!-- jQuery UI CSS Reference -->
-<link href="@Url.Content("~/Content/themes/base/jquery-ui.min.css")" rel="stylesheet" />
-<!-- Required jQuery and jQuery UI Javascript references -->
-<script src="@Url.Content("~/Scripts/jquery-1.12.1.js")"></script>
-<script src="@Url.Content("~/Scripts/jquery-ui-1.12.1.min.js")"></script>
+﻿@model LogisticCompany.Models.ViewModels.DatePickerVewModel
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Datepicker - Default functionality</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#DateTimeFrom").datepicker();
+        });
 
-<script type="text/javascript">
-    $(function () {
-        // This will make every element with the class "date-picker" into a DatePicker element
-        $('.date-picker').datepicker();
-    })
-</script>
+        $(document).ready(function () {
+            $("#PartialView").load("/Views/Reports/_IncomeForPeriod");
+        });
+    </script>
+    
+</head>
+<body>
 
-<input class="date-picker" />
-@Html.TextBox("YourTextBox", "", new { @class = "date-picker" })
+    @using (Html.BeginForm())
+    {
+        @Html.EditorForModel("DatePickerVewModel")
+        <br />
+        <input asp-action="IncomeForPeriod" type="submit" value="Submit" />
+    }
+
+    <div id="PartialView">
+
+    </div>
+</body>
+</html>

@@ -110,11 +110,21 @@ namespace LogisticCompany.Controllers
             return PartialView("_SelectIncomePeriod");
         }
 
-        public async Task<IActionResult> IncomeForPeriod(DateTime from, DateTime to)
+        public async Task<IActionResult> IncomeForPeriod(DatePickerVewModel datePickerVewModel)
         {
-            var income = 0;
+            PriceViewModel priceViewModel = new PriceViewModel();
 
-            return PartialView("_IncomeForPeriod", income);
+            var shipments = _context.Shipments
+                .Where(sd => sd.Date >= datePickerVewModel.DateTimeFrom && sd.Date < datePickerVewModel.DateTimeTo)
+                .OrderByDescending(s => s.Date)
+                .ToList();
+
+            foreach (var shipment in shipments)
+            {
+                priceViewModel.Price += shipment.Price;
+            }
+
+            return PartialView("_IncomeForPeriod", priceViewModel);
         }
 
         private ApplicationUserViewModel MapToUserViewModel(ApplicationUser user, string role)

@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace LogisticCompany.Models.ViewModels
 {
-    public class PriceViewModel
+    public class DatePickerVewModel
     {
-        public decimal Price { get; set; }
+        public DateTime DateTimeFrom { get; set; }
+
+        public DateTime DateTimeTo { get; set; }
     }
 }
