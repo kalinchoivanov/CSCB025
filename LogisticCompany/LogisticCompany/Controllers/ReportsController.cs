@@ -94,6 +94,29 @@ namespace LogisticCompany.Controllers
             return PartialView("_ShipmentsRecievedBy", shipments);
         }
 
+        public async Task<IActionResult> OpenShipmentsRegisteredBy()
+        {
+            return PartialView("_FindShipmentsRegisteredBy");
+        }
+        public async Task<IActionResult> ShipmentsRegisteredBy(string userName)
+        {
+            var shipments = _context.Shipments.Include(s => s.Recipient).Include(s => s.Sender).Include(s => s.Employee).Where(s => s.Employee.UserName == userName).ToList();
+
+            return PartialView("_ShipmentsRegisteredBy", shipments);
+        }
+
+        public async Task<IActionResult> OpenIncomeForPeriod()
+        {
+            return PartialView("_SelectIncomePeriod");
+        }
+
+        public async Task<IActionResult> IncomeForPeriod(DateTime from, DateTime to)
+        {
+            var income = 0;
+
+            return PartialView("_IncomeForPeriod", income);
+        }
+
         private ApplicationUserViewModel MapToUserViewModel(ApplicationUser user, string role)
         {
             var userViewModel = new ApplicationUserViewModel()

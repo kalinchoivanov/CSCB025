@@ -85,7 +85,8 @@ namespace LogisticCompany.Controllers
                 
                 var recipient = _context.ApplicationUsers.FirstOrDefault(c => c.UserName == shipmentCreateModel.RecipientUserName);
                 var sender = _context.ApplicationUsers.FirstOrDefault(c => c.UserName == shipmentCreateModel.SenderUserName);
-
+                var employee = _context.ApplicationUsers.FirstOrDefault(c => c.UserName == HttpContext.User.Identity.Name);
+                    
                 if (recipient == null)
                 {
                     _notyf.Error("Recipient with this user name was not found!");
@@ -100,6 +101,7 @@ namespace LogisticCompany.Controllers
 
                 shipment.Sender = sender;
                 shipment.Recipient = recipient;
+                shipment.Employee = employee;
                 shipment.SenderId = sender.Id;
                 shipment.RecipientId = recipient.Id;
                 shipment.Origin = shipmentCreateModel.Origin;
@@ -107,6 +109,7 @@ namespace LogisticCompany.Controllers
                 shipment.Description = shipmentCreateModel.Description;
                 shipment.Weight = shipmentCreateModel.Weight;
                 shipment.Price = shipmentCreateModel.Price;
+                shipment.Date = DateTime.Now;
 
                 _context.Add(shipment);
                 await _context.SaveChangesAsync();
@@ -208,6 +211,23 @@ namespace LogisticCompany.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        //public task<iactionresult> calculateprice(double weight, shipmenttype type)
+        //{
+        //    double price = type == shipmenttype.normal ? 4.8 : 8;
+
+        //    if (weight > 5 && weight < 20)
+        //    {
+        //        price += 10;
+        //    }
+        //    else if (weight > 20)
+        //    {
+        //        price += 25;
+        //    }
+
+
+        //    return view();
+        //}
 
         private bool ShipmentExists(string id)
         {

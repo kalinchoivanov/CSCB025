@@ -1,0 +1,74 @@
+﻿@model IEnumerable<LogisticCompany.Models.Shipment>
+
+<p>
+    <h2>Shipments Registered By @Model.First().Employee.UserName</h2>
+</p>
+<div class="col-md-12">
+    <table class="table col-md-12" style="">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BillOfLanding)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Origin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Destination)
+                </th>
+                <th>
+                    Sender
+                </th>
+                <th>
+                    Recipient
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Weight)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BillOfLanding)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Origin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Destination)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sender.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Recipient.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Weight)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                </tr>
+            }
+</div>

@@ -27,6 +27,10 @@ namespace LogisticCompany.Models
 
         public string RecipientId { get; set; }
 
+        public virtual ApplicationUser Employee {get; set;}
+
+        public string EmployeeId { get; set; }
+
         public Status Status { get; set; }
 
         public ShipmentType Type { get; set; }
@@ -34,6 +38,8 @@ namespace LogisticCompany.Models
         public decimal Weight { get; set; }
 
         public decimal Price { get; set; }
+
+        public DateTime Date { get; set; }
     }
 
     public enum Status
